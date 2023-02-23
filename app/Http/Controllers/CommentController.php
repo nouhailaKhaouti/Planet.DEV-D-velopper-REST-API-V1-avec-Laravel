@@ -66,7 +66,7 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $i)
+    public function update(Request $request, string $id)
     {
         $comment2update =comment::find($id);
         $comment2update->update($request->all());
