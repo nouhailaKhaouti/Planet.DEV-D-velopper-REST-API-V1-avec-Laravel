@@ -3,9 +3,13 @@
 use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Category;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
+<<<<<<< HEAD
 use App\Http\Controllers\TagController;
+=======
+
+>>>>>>> 775915a10e0960580191c6575c34615d82d029e4
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,7 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('category',CategoryController::class);
 
+<<<<<<< HEAD
 Route::resource('Article',ArticleController::class);
 
 Route::resource('Tag',TagController::class);
+=======
+
+  Route::resource('comment',CommentController::class);
+
+
+>>>>>>> 775915a10e0960580191c6575c34615d82d029e4
 
