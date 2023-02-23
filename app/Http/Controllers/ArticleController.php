@@ -2,65 +2,107 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleRequest;
+use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth:api');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+        $articles = Article::orderBy('id')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'articles' => $articles
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        //
+        $article = Article::create($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => "Article Created successfully!",
+            'article' => $article
+        ], 201);
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show(Article $article)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $article->find($article->id);
+        if (!$article) {
+            return response()->json(['message' => 'Article not found'], 404);
+        }
+        return response()->json($article, 200);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(ArticleRequest $request, Article $article)
     {
-        //
+        $article->update($request->all());
+
+        if (!$article) {
+            return response()->json(['message' => 'Article not found'], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => "Article Updated successfully!",
+            'article' => $article
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(string $id)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        if (!$article) {
+            return response()->json([
+                'message' => 'Article not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Article deleted successfully'
+        ], 200);
     }
 }
