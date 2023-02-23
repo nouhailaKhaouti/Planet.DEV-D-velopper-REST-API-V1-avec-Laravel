@@ -40,7 +40,7 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        $tags = [1, 2, 3];
+        $tags = $request->input('tags', []); // get the tags from the request;
         $article = Article::create($request->all());
         try {
 
@@ -88,7 +88,7 @@ class ArticleController extends Controller
         if (!$article) {
             return response()->json(['message' => 'Article not found'], 404);
         }
-        $tags  = [1,3];
+        $tags = $request->input('tags', []);
         // try {
             $article->update($request->all());
             $article->tags()->sync($tags);
