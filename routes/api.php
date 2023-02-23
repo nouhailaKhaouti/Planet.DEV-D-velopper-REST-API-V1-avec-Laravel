@@ -2,7 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Category;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +19,29 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+
+  'middleware' => 'api',
+  'prefix' => 'auth'
+
+], function ($router) {
+
+  Route::post('register', [AuthController::class,'register']);
+  Route::post('login', [AuthController::class,'login']);
+  Route::post('logout', [AuthController::class,'logout']);
+  Route::post('refresh', [AuthController::class,'refresh']);
+  Route::post('me', [AuthController::class,'me']);
 });
 
 Route::resource('category',CategoryController::class);
+
+Route::resource('Article',ArticleController::class);
+
+Route::resource('Tag',TagController::class);
+
+  Route::resource('comment',CommentController::class);
+
+  Route::resource('user',UserController::class);
+
+
+

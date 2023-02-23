@@ -22,7 +22,10 @@ class ArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'title' => 'required|max:30',
+            'content' => 'required',
+            'category_id' => 'required',
         ];
     }
 }
