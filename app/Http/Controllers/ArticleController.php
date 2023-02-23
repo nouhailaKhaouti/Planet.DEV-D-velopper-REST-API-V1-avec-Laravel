@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\TagRequest;
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ArticleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -22,7 +24,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('id')->get();
+        $articles = Article::with('tags')->get();
 
         return response()->json([
             'status' => 'success',
@@ -38,11 +40,22 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        $tags = [1, 2, 3];
         $article = Article::create($request->all());
+        try {
 
+            $article->tags()->attach($tags);
+    
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => "Failed to attache tags to article: " . $e->getMessage()
+            ], 500);
+        }
         return response()->json([
             'status' => true,
-            'message' => "Article Created successfully!",
+            'message' => "Article created successfully!",
             'article' => $article
         ], 201);
     }
@@ -69,13 +82,19 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request,$id)
     {
-        $article->update($request->all());
-
+        $article=Article::find($id);
         if (!$article) {
             return response()->json(['message' => 'Article not found'], 404);
         }
+        $tags  = [1,3];
+        // try {
+            $article->update($request->all());
+            $article->tags()->sync($tags);
+        // } catch (\Exception) {
+        //     return response()->json(['message' => 'Failed to update article'], 405);
+        // }
 
         return response()->json([
             'status' => true,
@@ -90,8 +109,10 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
+        $article=Article::find($id);
+        $article->tags()->detach();
         $article->delete();
 
         if (!$article) {

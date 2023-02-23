@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,8 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('category',CategoryController::class);
 
-Route::resource('category',CategoryController::class);
+Route::resource('Article',ArticleController::class);
 
-Route::get('/category', function(){
-    return 'category';
-});
+Route::resource('Tag',TagController::class);
+
