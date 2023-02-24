@@ -41,7 +41,19 @@ Route::resource('Tag',TagController::class);
 
   Route::resource('comment',CommentController::class);
 
-  Route::resource('user',UserController::class);
+  // Route::resource('user',UserController::class);
 
 
 
+  
+
+
+
+  
+
+
+Route::get('profile/{id}', [UserController::class, 'show']);
+
+Route::put('profile/{id}', [UserController::class, 'update']);
+
+Route::delete('profile/{id}', [UserController::class, 'destroy']);
