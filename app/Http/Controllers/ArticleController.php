@@ -89,12 +89,12 @@ class ArticleController extends Controller
             return response()->json(['message' => 'Article not found'], 404);
         }
         $tags = $request->input('tags', []);
-        // try {
+        try {
             $article->update($request->all());
             $article->tags()->sync($tags);
-        // } catch (\Exception) {
-        //     return response()->json(['message' => 'Failed to update article'], 405);
-        // }
+        } catch (\Exception) {
+            return response()->json(['message' => 'Failed to update article'], 405);
+        }
 
         return response()->json([
             'status' => true,
