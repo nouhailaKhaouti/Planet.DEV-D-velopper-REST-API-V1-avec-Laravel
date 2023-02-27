@@ -34,6 +34,8 @@ Route::group([
   Route::post('me', [AuthController::class,'me']);
 });
 
+
+
 Route::resource('category',CategoryController::class);
 
 Route::resource('Article',ArticleController::class);
