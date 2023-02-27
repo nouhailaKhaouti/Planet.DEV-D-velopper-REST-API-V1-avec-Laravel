@@ -44,7 +44,7 @@ class ArticlePolicy
     public function create(User $user)
     {
         // Only allow publishers and admins to create articles
-        return  $user->role->label === 'publisher' || $user->role->label === 'admin';
+        return  $user->role_id === 3 || $user->role_id === 2;
     }
 
     /**
@@ -57,7 +57,7 @@ class ArticlePolicy
     public function update(User $user, article $article)
     {
         // Only allow the publisher or admin to update an article
-        return $user->id === $article->user_id || $user->role === 'admin';
+        return $user->id === $article->user_id || $user->role_id === 2;
     }
 
     /**
@@ -70,7 +70,7 @@ class ArticlePolicy
     public function delete(User $user, article $article)
     {
         // Only allow the publisher or admin to delete an article
-        return $user->id === $article->user_id || $user->role->label === 'admin';
+        return $user->id === $article->user_id || $user->role_id=== 2;
     }
 
     /**
@@ -83,7 +83,7 @@ class ArticlePolicy
     public function restore(User $user, article $article)
     {
         // Only allow admins to restore articles
-        return  $user->role->label === 'admin';
+        return  $user->role_id === 2;
     }
 
     /**
@@ -96,6 +96,6 @@ class ArticlePolicy
     public function forceDelete(User $user, article $article)
     {
         // Only allow admins to permanently delete articles
-        return $user->role->label === 'admin';
+        return $user->role_id === 2;
     }
 }
