@@ -44,14 +44,14 @@ class ArticlePolicy
     public function create(User $user)
     {
         // Only allow publishers and admins to create articles
-        return  $user->role_id === 3 || $user->role_id === 2;
+        return  $user->role->label === "admin" || $user->role->label === "publisher";
     }
 
     /**
      * Determine whether the user can update the article.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\article  $article
      * @return mixed
      */
     public function update(User $user, article $article)

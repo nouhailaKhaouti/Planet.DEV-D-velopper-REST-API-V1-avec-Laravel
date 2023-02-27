@@ -34,13 +34,17 @@ Route::group([
   Route::post('me', [AuthController::class,'me']);
 });
 
+Route::group([
+  'is_publisher_admin'
+],function(){
+  Route::resource('category',CategoryController::class);
+
+  Route::resource('Article',ArticleController::class);
+  
+  Route::resource('Tag',TagController::class);
+});
 
 
-Route::resource('category',CategoryController::class);
-
-Route::resource('Article',ArticleController::class);
-
-Route::resource('Tag',TagController::class);
 
 // Route::resource('comment',CommentController::class);
 

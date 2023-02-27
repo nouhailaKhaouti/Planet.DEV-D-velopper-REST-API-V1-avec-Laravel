@@ -40,14 +40,14 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        
-        $this->authorize('create');
+
         $tags = $request->input('tags', []); // get the tags from the request;
         $article = new article();
         $article->user_id =auth()->user()->id;
         $article->category_id = $request->category_id;
         $article->content =$request->content;
         $article->title =$request->title;
+        // $this->authorize('create');
         $article->save();
         try {
 
