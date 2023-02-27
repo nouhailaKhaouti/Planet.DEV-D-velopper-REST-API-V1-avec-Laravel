@@ -71,6 +71,10 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         return Category::destroy($id);
+        return response()->json([
+            'status' => true,
+            'message' => 'Comment deleted successfully'
+        ], 200);
     }
    
 }
