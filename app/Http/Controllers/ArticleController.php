@@ -40,8 +40,15 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        
+        $this->authorize('create');
         $tags = $request->input('tags', []); // get the tags from the request;
-        $article = Article::create($request->all());
+        $article = new article();
+        $article->user_id =auth()->user()->id;
+        $article->category_id = $request->category_id;
+        $article->content =$request->content;
+        $article->title =$request->title;
+        $article->save();
         try {
 
             $article->tags()->attach($tags);
@@ -84,7 +91,9 @@ class ArticleController extends Controller
      */
     public function update(ArticleRequest $request,$id)
     {
+       
         $article=Article::find($id);
+        $this->authorize('update',$article);
         if (!$article) {
             return response()->json(['message' => 'Article not found'], 404);
         }
@@ -112,6 +121,7 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $article=Article::find($id);
+        $this->authorize('delete',$article);
         $article->tags()->detach();
         $article->delete();
 
