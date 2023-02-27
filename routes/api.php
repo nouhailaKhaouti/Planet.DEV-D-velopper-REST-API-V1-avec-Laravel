@@ -45,6 +45,7 @@ Route::resource('Tag',TagController::class);
 Route::resource('user',UserController::class);
 
 
+
 Route::get('/Article/{article}/comment',[ CommentController::class,'index']);
 Route::post('/Article/{article}/comment', [CommentController::class,'store']);
 Route::get('/Article/{article}/comment/{comment}', [CommentController::class,'show']);
@@ -53,3 +54,15 @@ Route::delete('/Article/{article}/comment/{comment}', [CommentController::class,
 
 
 
+  
+
+
+
+  
+
+
+Route::get('profile/{id}', [UserController::class, 'show']);
+
+Route::put('profile/{id}', [UserController::class, 'update']);
+
+Route::delete('profile/{id}', [UserController::class, 'destroy']);
