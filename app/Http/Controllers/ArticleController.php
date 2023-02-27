@@ -12,10 +12,10 @@ use Illuminate\Http\Response;
 
 class ArticleController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
 
     /**
      * Display a listing of the resource.
@@ -89,12 +89,12 @@ class ArticleController extends Controller
             return response()->json(['message' => 'Article not found'], 404);
         }
         $tags = $request->input('tags', []);
-        // try {
+        try {
             $article->update($request->all());
             $article->tags()->sync($tags);
-        // } catch (\Exception) {
-        //     return response()->json(['message' => 'Failed to update article'], 405);
-        // }
+        } catch (\Exception) {
+            return response()->json(['message' => 'Failed to update article'], 405);
+        }
 
         return response()->json([
             'status' => true,
