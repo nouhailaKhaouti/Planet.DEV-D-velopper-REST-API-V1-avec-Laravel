@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,9 +41,29 @@ Route::resource('Article',ArticleController::class);
 
 Route::resource('Tag',TagController::class);
 
-  Route::resource('comment',CommentController::class);
+// Route::resource('comment',CommentController::class);
 
-  Route::resource('user',UserController::class);
+Route::resource('user',UserController::class);
 
 
 
+Route::get('/Article/{article}/comment',[ CommentController::class,'index']);
+Route::post('/Article/{article}/comment', [CommentController::class,'store']);
+Route::get('/Article/{article}/comment/{comment}', [CommentController::class,'show']);
+Route::put('/Article/{article}/comment/{comment}', [CommentController::class,'update']);
+Route::delete('/Article/{article}/comment/{comment}', [CommentController::class,'destroy']);
+
+
+
+  
+
+
+
+  
+
+
+Route::get('profile/{id}', [UserController::class, 'show']);
+
+Route::put('profile/{id}', [UserController::class, 'update']);
+
+Route::delete('profile/{id}', [UserController::class, 'destroy']);
