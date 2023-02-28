@@ -18,7 +18,7 @@ use App\Http\Controllers\CategoryController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-*/
+*/ 
 
 Route::group([
 
@@ -33,6 +33,8 @@ Route::group([
   Route::post('refresh', [AuthController::class,'refresh']);
   Route::post('me', [AuthController::class,'me']);
 });
+
+
 
 Route::resource('category',CategoryController::class);
 

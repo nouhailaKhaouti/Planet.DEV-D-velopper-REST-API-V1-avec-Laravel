@@ -50,11 +50,10 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(article $article, comment $comment)
+    public function show()
 
-    {
+    { 
         $comments= Comment::where('user_id',auth()->user()->id)->get();
-
         return response()->json($comments);
     }
 
