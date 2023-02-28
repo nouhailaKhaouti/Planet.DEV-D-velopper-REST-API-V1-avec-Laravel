@@ -47,9 +47,9 @@ Route::resource('user',UserController::class);
 
 
 
-Route::get('/Article/{article}/comment',[ CommentController::class,'index']);
+Route::get('/Article/{article}/comments',[ CommentController::class,'index']);
 Route::post('/Article/{article}/comment', [CommentController::class,'store']);
-Route::get('/Article/{article}/comment/{comment}', [CommentController::class,'show']);
+Route::get('/Article/{article}/comment/my', [CommentController::class,'show']);
 Route::put('/Article/{article}/comment/{comment}', [CommentController::class,'update']);
 Route::delete('/Article/{article}/comment/{comment}', [CommentController::class,'destroy']);
 

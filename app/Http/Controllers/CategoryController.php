@@ -49,15 +49,6 @@ class CategoryController extends Controller
         return Category::find($id);
     }
 
-    /* Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /* Update the specified resource in storage.
-     */
     public function update(Request $request,  $id)
     {
         $category_update = Category::find($id);
